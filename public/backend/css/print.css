@@ -1,0 +1,50 @@
+@media print{
+    .table-responsive, .print-header{
+      /*font-size: 20px;*/
+      /*transform: scale(1,1);*/
+      max-width: 100% !important;
+      /*display: block !important;*/
+    }
+
+    table, .print-header{
+      width: 135vw !important;
+      /*height: 100vh !important; */
+      /*padding: 0 !important;*/
+      /*display: table !important;*/
+      /*width: auto !important;*/
+      /*height: auto !important;*/
+      /*table-layout: fixed !important;*/
+     
+    }
+
+    .card-body
+
+    .table td {
+      padding: 1px !important;
+    }
+    .table th {
+      padding: 2px 3px !important;
+    }
+
+    @page {
+      /* size: auto; */  /* auto is the initial value */
+      /* size: 3in 7in portrait; */  /*3in 1.57in portrait , landscape*/
+      /* margin: 0mm; */ /* this affects the margin in the printer settings */
+      /*width: 3.15in !important;*/
+      /*font-size: 10px;*/
+      /*zoom: 50%;*/
+    }
+    /* Or: */
+    @page :left {
+      /*margin: 1cm;*/
+    }
+
+    @page :right {
+      /*margin: 4cm;*/
+    }
+
+    /* The first page of a print can be manipulated as well */
+    @page :first {
+      /*margin: 1cm 2cm;*/
+    }
+}

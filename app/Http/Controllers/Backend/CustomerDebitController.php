@@ -1,0 +1,151 @@
+<?php
+
+namespace App\Http\Controllers\Backend;
+
+use App\Http\Requests;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Validator;
+use Illuminate\Support\Facades\Input;
+use Auth;
+use Response;
+
+use App\User;
+use App\Purchase;
+use App\Address;
+
+class CustomerDebitController extends Controller
+{
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $addresses = Address::pluck('id','name');
+        return view('backend.customer-debitor', compact('addresses'));
+    }
+
+    public function getAllDebitor(Request $request){
+        $columns = array(
+                        0 =>'id', 
+                        1 =>'name',
+                        2 =>'email',
+                        3 =>'phone_no',
+                        4 =>'address_id',
+                        5 =>'created_at',
+                        6 =>'action',
+                    );
+        $totalData = User::where('user_type','0')
+                        ->where('type','2')->orderBy('id','asc')->count();
+        $totalFiltered = $totalData; 
+        $limit = $request->input('length');
+        $start = $request->input('start');
+        $order = $columns[$request->input('order.0.column')];
+        $dir = $request->input('order.0.dir');
+            
+        if(empty($request->input('search.value')))
+        {            
+            $posts = User::where('user_type','0')
+                        ->with('getAddress')
+                        ->where('type','2')
+                        ->offset($start)
+                        ->limit($limit)
+                        ->orderBy($order,$dir)
+                        ->get();
+        }
+        else {
+            $search = $request->input('search.value'); 
+            $posts =  User::where('name', 'LIKE',"%{$search}%")
+                            ->where('user_type','0')
+                            ->where('type','2')
+                            ->offset($start)
+                            ->limit($limit)
+                            ->orderBy($order,$dir)
+                            ->get();
+
+            $totalFiltered = User::where('user_type','0')
+                            ->where('type','2')
+                            ->where('name', 'LIKE',"%{$search}%")
+                            ->count();
+        }
+        $data = array();
+        if(!empty($posts))
+        {
+            foreach ($posts as $index=>$post)
+            {
+                $nestedData['id'] = $index+1;
+                $nestedData['name'] = "<a href='customer-debitor/$post->id'>$post->name</a>";
+                $nestedData['email'] = $post->email;
+                $nestedData['phone_no'] = $post->phone_no;
+                $nestedData['address_id'] = $post->getAddress->name;
+                $nestedData['created_at'] = date("Y/M/D H:i", strtotime($post->created_at)).' '.'<span class="text-primary badge badge-info">'.$post->created_at->diffForHumans().'</span>';
+                $nestedData['action'] = "<a href='javascript:void(0);' class='edit_category' data-target='#edit_category' data-toggle='modal'><span><i class='fa fa-pencil-square-o edit_category' id='$post->id'></i></span></a> 
+                    | 
+                    <a class='delete_category' id='category' href='javascript:void(0)'><span class='delete_category' id='category'><i class='fa fa-times' id='$post->id'></i></span></a>";
+                $data[] = $nestedData;
+            }
+        }
+        $json_data = array(
+                    "draw"            => intval($request->input('draw')),  
+                    "recordsTotal"    => intval($totalData),  
+                    "recordsFiltered" => intval($totalFiltered), 
+                    "data"            => $data   
+                    );
+        echo json_encode($json_data); 
+    }
+
+    public function debitor_store(){
+        $rules = array(
+            'name' => 'required',
+            'email' => 'required|string|email|max:255|unique:users',
+            'phone_no' => 'required|unique:users',
+        );
+        $validator = Validator::make(Input::all(), $rules);
+            if ($validator->fails()) {
+            return back()->withInput()
+            ->withErrors($validator)
+            ->withInput();
+        }
+        $current_date = date("Y-m-d H:i:s");
+        $user_id = Auth::user()->id;
+        $user = new User;
+        $user->name = Input::get('name');
+        $email = Input::get('email');
+        $phone = Input::get('phone_no');
+        if($email){
+            $user->email = $email;
+        }
+        else{
+            $user->email = $phone;
+        }
+        $user->password = bcrypt($phone);
+        $user->phone_no = $phone;
+        $user->address_id = Input::get('address_id');
+        $user->branch_id = '1'; // note very important steps
+        $user->user_type = '0';
+        $user->type = '2';
+        $user->is_active = '1';
+        $user->created_by = $user_id;
+        $user->created_at = $current_date;
+    if ($user->save()){
+            $this->request->session()->flash('alert-success', 'Debitor Customer saved successfully!');
+        }
+    else{
+        $this->request->session()->flash('alert-warning', 'Debitor Customer could not add!');
+    }
+    return back()->withInput();
+    }
+
+    public function customer_debitor_detail($id){
+        $user_details = Purchase::where('purchase_user_id', $id)->orderBy('id','DESC')->get();
+        $name = User::where('id', $id)->select('name','phone_no')->get();
+        return view('backend.customer-debitor-detail', compact('user_details','name'));
+    }
+}

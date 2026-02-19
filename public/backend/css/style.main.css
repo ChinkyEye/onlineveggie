@@ -1,0 +1,55 @@
+/*my rotate*/
+.rotate-this  {
+    -moz-transition: all .5s linear;
+    -webkit-transition: all .5s linear;
+    transition: all .5s linear;
+}
+.show>.rotate.down .rotate-this {
+    -moz-transform:rotate(90deg);
+    -webkit-transform:rotate(90deg);
+    transform:rotate(90deg);
+    color: #007bff;
+}
+
+/*table*/
+.my-table>thead>tr>th{
+	padding-bottom: 3px;
+	padding-top: 3px;
+}
+.my-table>tbody>tr>td{
+	padding-bottom: 3px;
+	padding-top: 3px;
+}
+
+.page-link{
+	padding: 5px;
+}
+
+.select2{
+	width: 100% !important;
+}
+
+/*sidebar*/
+@-webkit-keyframes blinker {
+  from {opacity: 1.0;}
+  to {opacity: 0.0;}
+}
+.blink{
+	text-decoration: blink;
+	font-size: 12px;
+	-webkit-animation-name: blinker;
+	-webkit-animation-duration: 3s;
+	-webkit-animation-iteration-count:infinite;
+	-webkit-animation-timing-function:ease-in-out;
+	-webkit-animation-direction: alternate;
+}
+
+/*card*/
+.card-body{
+	overflow: auto;
+}
+.stock-img{
+    height: 100px;
+    object-fit: contain;
+    object-position: center;
+}
