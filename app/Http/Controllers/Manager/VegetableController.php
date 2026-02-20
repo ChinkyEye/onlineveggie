@@ -13,6 +13,7 @@ use Response;
 use App\Category;
 use App\Vegetable;
 use App\Purchase;
+use Image;
 
 class VegetableController extends Controller
 {
@@ -119,11 +120,27 @@ class VegetableController extends Controller
         $category->display_name = Input::get('display_name');
         $category->slug = strtolower(Input::get('display_name')).'-'.rand(100,1000);
         $category->category_id = Input::get('category_id');
+
+            // $image = $request->file('image');
+            // $name = time().'.'.$image->getClientOriginalExtension();
+            // $destinationPath = 'images/vegetable';
+            // $image->move($destinationPath, $name);
+            // $category->image = $name;
+
             $image = $request->file('image');
-            $name = time().'.'.$image->getClientOriginalExtension();
-            $destinationPath = 'images/vegetable';
-            $image->move($destinationPath, $name);
+            $name = time() . '.webp';
+            $destinationPath = public_path('images/vegetable/' . $name);
+
+            // Resize + Compress
+            Image::make($image)
+                ->resize(800, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                    $constraint->upsize();
+                })
+                ->encode('webp', 65) // 60–70 is good balance
+                ->save($destinationPath);
             $category->image = $name;
+
         $category->is_active = '1';
         $category->created_by = $user_id;
         $category->created_at = $current_date;

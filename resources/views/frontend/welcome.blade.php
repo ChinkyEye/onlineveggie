@@ -73,7 +73,7 @@
                             <div class="carousel-inner">
                                 @foreach($sliders->take(3) as $data)
                                 <div class="carousel-item @if($loop->first) active @endif" data-interval="3000">
-                                    <img src="{{URL::to('/')}}/images/slider/{{$data->image}}" class="d-block w-100" alt="..." style="width: 200px;height: 500px">
+                                    <img src="{{URL::to('/')}}/images/slider/{{$data->image}}" class="d-block w-100" alt="..." style="width: 200px;height: 500px" loading="lazy" alt="photo">
 
                                     <div class="carousel-caption d-none d-md-block">
                                         <h5>First slide label</h5>
