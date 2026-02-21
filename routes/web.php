@@ -282,7 +282,7 @@ Route::group(['middleware'=>['manager']],function(){
 	Route::get('/blog/show','Frontend\BlogController@create')->name('blog-show');
 	
 	//contact
-	Route::get('/contact','Frontend\ContactController@index');
+	Route::get('/contact','Frontend\ContactController@index')->middleware('cache.response');
 
 	Route::get('/price','Frontend\todayPriceController@todayPrice');
 	Route::get('/category/{slug}','Frontend\CategoryController@index');

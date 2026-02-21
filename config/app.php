@@ -178,7 +178,8 @@ return [
         App\Providers\RouteServiceProvider::class,
         Riskihajar\Terbilang\TerbilangServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
-        Barryvdh\Debugbar\ServiceProvider::class,   
+        Barryvdh\Debugbar\ServiceProvider::class,  
+        Spatie\ResponseCache\ResponseCacheServiceProvider::class, 
     ],
 
     /*
