@@ -15,13 +15,26 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
 
     <!-- Css Styles -->
-    <link rel="stylesheet" href="{{ URL::to('/')}}/frontend/css/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="{{ URL::to('/')}}/frontend/css/font-awesome.min.css" type="text/css">
+    <!-- <link rel="stylesheet" href="{{ URL::to('/')}}/frontend/css/bootstrap.min.css" type="text/css"> -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- <link rel="stylesheet" href="{{ URL::to('/')}}/frontend/css/font-awesome.min.css" type="text/css"> -->
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
     <link rel="stylesheet" href="{{ URL::to('/')}}/frontend/css/elegant-icons.css" type="text/css">
-    <link rel="stylesheet" href="{{ URL::to('/')}}/frontend/css/nice-select.css" type="text/css">
-    <link rel="stylesheet" href="{{ URL::to('/')}}/frontend/css/jquery-ui.min.css" type="text/css">
-    <link rel="stylesheet" href="{{ URL::to('/')}}/frontend/css/owl.carousel.min.css" type="text/css">
+
+    <!-- <link rel="stylesheet" href="{{ URL::to('/')}}/frontend/css/nice-select.css" type="text/css"> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-nice-select@1.1.0/css/nice-select.css">
+
+    <!-- <link rel="stylesheet" href="{{ URL::to('/')}}/frontend/css/jquery-ui.min.css" type="text/css"> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-ui-dist/jquery-ui.min.css">
+
+
+    <!-- <link rel="stylesheet" href="{{ URL::to('/')}}/frontend/css/owl.carousel.min.css" type="text/css"> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/assets/owl.carousel.min.css">
+
     <link rel="stylesheet" href="{{ URL::to('/')}}/frontend/css/slicknav.min.css" type="text/css">
+
     <link rel="stylesheet" href="{{ URL::to('/')}}/frontend/css/style.css" type="text/css">
 
 </head>
@@ -61,14 +74,29 @@
     
     <!-- Footer Section End -->
     <!-- Js Plugins -->
-    <script src="{{ URL::to('/')}}/frontend/js/jquery-3.3.1.min.js"></script>
-    <script src="{{ URL::to('/')}}/frontend/js/bootstrap.min.js"></script>
-    <script src="{{ URL::to('/')}}/frontend/js/jquery.nice-select.min.js"></script>
-    <script src="{{ URL::to('/')}}/frontend/js/jquery-ui.min.js"></script>
+    <!-- <script src="{{ URL::to('/')}}/frontend/js/jquery-3.3.1.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <!-- <script src="{{ URL::to('/')}}/frontend/js/bootstrap.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- <script src="{{ URL::to('/')}}/frontend/js/jquery.nice-select.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery-nice-select@1.1.0/js/jquery.nice-select.min.js"></script>
+
+
+    <!-- <script src="{{ URL::to('/')}}/frontend/js/jquery-ui.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery-ui-dist/jquery-ui.min.js"></script>
+
     <script src="{{ URL::to('/')}}/frontend/js/jquery.slicknav.js"></script>
-    <script src="{{ URL::to('/')}}/frontend/js/mixitup.min.js"></script>
-    <script src="{{ URL::to('/')}}/frontend/js/owl.carousel.min.js"></script>
+
+    
+    <!-- <script src="{{ URL::to('/')}}/frontend/js/mixitup.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/mixitup@3/dist/mixitup.min.js"></script>
+    
+    <!-- <script src="{{ URL::to('/')}}/frontend/js/owl.carousel.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/owl.carousel.min.js"></script>
+
     <script src="{{ URL::to('/')}}/frontend/js/main.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     
     
