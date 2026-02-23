@@ -14,6 +14,12 @@
 // Route::get('/', function () {
 //     return view('frontend.welcome');
 // });
+use Illuminate\Support\Facades\Redis;
+
+Route::get('/redis-test', function () {
+    Redis::set('name', 'Laravel');
+    return Redis::get('name');
+});
 
 Route::prefix('api/v1')->group(function () {
 	Route::post('login', 'Api\HomeController@login');
