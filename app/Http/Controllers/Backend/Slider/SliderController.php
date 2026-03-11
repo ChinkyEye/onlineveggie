@@ -91,65 +91,120 @@ class SliderController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-         $rules = array(
-            'title' => 'required',
-        );
-        $validator = Validator::make(Input::all(), $rules);
-            if ($validator->fails()) {
-            return back()->withInput()
-            ->withErrors($validator)
-            ->withInput();
-        }
-        $sliders = new Slider;
-        $sliders->title = Input::get('title');
-        $sliders->slug = Input::get('title');
+    use Illuminate\Support\Facades\Input;
+use Image; // Intervention Image
 
-        // $image = Input::file('image');
-        // if($image != ""){
+public function store(Request $request)
+{
+    $rules = [
+        'title' => 'required',
+    ];
 
-        //  $destinationPath = 'images/slider/'; // upload path
-        //  $extension = $image->getClientOriginalExtension(); // getting image extension
-        //  $fileName = md5(mt_rand()).'.'.$extension; // renameing image
+    $validator = Validator::make(Input::all(), $rules);
 
-        //  $image->move($destinationPath, $fileName); /*move file on destination*/
-        //  $file_path = $destinationPath.'/'.$fileName;
-        //  $sliders->image = $fileName;
-        //  // $sliders->image = $image->getClientOriginalName();
-        // }
-
-        $image = Input::file('image');
-
-        if($image) {
-
-            $destinationPath = public_path('images/slider/'); // upload path
-            $fileName = md5(mt_rand()) . '.webp'; // rename and convert to webp
-
-            // Resize + Compress + Convert to WebP
-            Image::make($image)
-                ->resize(1200, null, function ($constraint) {
-                    $constraint->aspectRatio(); // maintain aspect ratio
-                    $constraint->upsize();       // prevent upscaling
-                })
-                ->encode('webp', 65) // 65% quality (good balance)
-                ->save($destinationPath . $fileName);
-
-            // Save filename in DB
-            $sliders->image = $fileName;
-        }
-
-        $sliders->created_by = Auth::user()->id;
-        $sliders->updated_by = Auth::user()->id;
-        if ($sliders->save()){
-            $this->request->session()->flash('alert-success', 'Slider saved successfully!');
-        }
-        else{
-            $this->request->session()->flash('alert-warning', 'Slider could not add!');
-        }
-        return back()->withInput();
-
+    if ($validator->fails()) {
+        return back()->withErrors($validator)->withInput();
     }
+
+    $slider = new Slider;
+    $slider->title = Input::get('title');
+    $slider->slug = Input::get('title');
+
+    $image = Input::file('image');
+
+    if ($image) {
+
+        $destinationPath = public_path('images/slider/');
+
+        // Create folder if missing
+        if (!file_exists($destinationPath)) {
+            mkdir($destinationPath, 0775, true);
+        }
+
+        $fileName = md5(mt_rand()) . '.webp';
+
+        Image::make($image)
+            ->resize(1200, null, function ($constraint) {
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            })
+            ->encode('webp', 65)
+            ->save($destinationPath . $fileName);
+
+        $slider->image = $fileName;
+    }
+
+    $slider->created_by = Auth::user()->id;
+    $slider->updated_by = Auth::user()->id;
+
+    if ($slider->save()) {
+        $request->session()->flash('alert-success', 'Slider saved successfully!');
+    } else {
+        $request->session()->flash('alert-warning', 'Slider could not be added!');
+    }
+
+    return back();
+}
+
+    // public function store(Request $request)
+    // {
+    //      $rules = array(
+    //         'title' => 'required',
+    //     );
+    //     $validator = Validator::make(Input::all(), $rules);
+    //         if ($validator->fails()) {
+    //         return back()->withInput()
+    //         ->withErrors($validator)
+    //         ->withInput();
+    //     }
+    //     $sliders = new Slider;
+    //     $sliders->title = Input::get('title');
+    //     $sliders->slug = Input::get('title');
+
+    //     // $image = Input::file('image');
+    //     // if($image != ""){
+
+    //     //  $destinationPath = 'images/slider/'; // upload path
+    //     //  $extension = $image->getClientOriginalExtension(); // getting image extension
+    //     //  $fileName = md5(mt_rand()).'.'.$extension; // renameing image
+
+    //     //  $image->move($destinationPath, $fileName); /*move file on destination*/
+    //     //  $file_path = $destinationPath.'/'.$fileName;
+    //     //  $sliders->image = $fileName;
+    //     //  // $sliders->image = $image->getClientOriginalName();
+    //     // }
+
+    //     $image = Input::file('image');
+
+    //     if($image) {
+
+    //         $destinationPath = public_path('images/slider/'); // upload path
+    //         $fileName = md5(mt_rand()) . '.webp'; // rename and convert to webp
+
+    //         // Resize + Compress + Convert to WebP
+    //         Image::make($image)
+    //             ->resize(1200, null, function ($constraint) {
+    //                 $constraint->aspectRatio(); // maintain aspect ratio
+    //                 $constraint->upsize();       // prevent upscaling
+    //             })
+    //             ->encode('webp', 65) // 65% quality (good balance)
+    //             ->save($destinationPath . $fileName);
+
+    //         // Save filename in DB
+    //         $sliders->image = $fileName;
+    //     }
+
+    //     $sliders->created_by = Auth::user()->id;
+    //     $sliders->updated_by = Auth::user()->id;
+    //     if ($sliders->save()){
+    //         $this->request->session()->flash('alert-success', 'Slider saved successfully!');
+    //     }
+    //     else{
+    //         $this->request->session()->flash('alert-warning', 'Slider could not add!');
+    //     }
+    //     return back()->withInput();
+
+    // }
 
     /**
      * Display the specified resource.
