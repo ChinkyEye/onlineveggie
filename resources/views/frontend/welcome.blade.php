@@ -76,8 +76,9 @@
                                     <img src="{{URL::to('/')}}/images/slider/{{$data->image}}" class="d-block w-100" alt="..." style="width: 200px;height: 500px" loading="lazy" alt="photo">
 
                                     <div class="carousel-caption d-none d-md-block">
-                                        <h5>First slide label</h5>
-                                        <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+                                        <!-- <h5>First slide label</h5> -->
+                                        <!-- <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p> -->
+                                        <p>{{$data->title}}</p>
                                         <a href="#" class="primary-btn">SHOP NOW</a>
                                     </div>
                                 </div>
