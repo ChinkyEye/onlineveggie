@@ -13,3 +13,16 @@ let mix = require('laravel-mix');
 
 mix.js('resources/assets/js/app.js', 'public/js')
    .sass('resources/assets/sass/app.scss', 'public/css');
+   
+mix.styles([
+    'public/frontend/css/elegant-icons.css',
+    'public/frontend/css/slicknav.min.css',
+    'public/frontend/css/style.css'
+], 'public/css/frontend.css');
+
+mix.scripts([
+    'public/frontend/js/jquery.slicknav.js',
+    'public/frontend/js/main.js'
+], 'public/js/frontend.js');
+
+mix.version();
