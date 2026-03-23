@@ -23,7 +23,7 @@
                         </div>
                         <div class="featured__item__text">
                             <h6><a href="#">{{$data->getName->display_name}}</a></h6>
-                            <h6>Rs {{$data->getPurchaseMinLatestI->rate}}/{{$data->getPurchaseMinLatestI->getUnit->name}}</h6>
+                            <h6>£ {{$data->getPurchaseMinLatestI->rate}}/{{$data->getPurchaseMinLatestI->getUnit->name}}</h6>
                         </div>
                         <form role="form" class="myform">
                             {{csrf_field()}}

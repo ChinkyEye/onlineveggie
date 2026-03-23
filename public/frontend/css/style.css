@@ -3146,7 +3146,7 @@ ol {
 		visibility: visible;
 	}
 	.header__top {
-		display: none;
+		display: inline-block;
 	}
 	.header__menu {
 		display: none;
@@ -3404,7 +3404,7 @@ ol {
 		visibility: visible;
 	}
 	.header__top {
-		display: none;
+		display: inline-block;
 	}
 	.header__menu {
 		display: none;
