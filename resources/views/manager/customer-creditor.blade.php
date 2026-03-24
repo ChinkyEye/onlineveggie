@@ -106,9 +106,13 @@
             "url": "{{route('getAllCreditor')}}",
             "dataType": "json",
             "type": "POST",
-            "data":{ 
-                _token: $(".token").val(),
-            }
+            // "data":{ 
+            //     _token: $(".token").val(),
+            // }
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+
         },
         "columns": [
         { "data": "id" },
