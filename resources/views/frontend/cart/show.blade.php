@@ -61,8 +61,8 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<div class="shoping__cart__btns">
-					<a href="{{URL::to('/')}}/cart/store" class="primary-btn cart-btn">CONTINUE SHOPPING</a>
-					<a href="{{URL::to('/')}}/cart/proceed" class="primary-btn cart-btn cart-btn-right "><span class="icon_loading"></span>
+					<a href="{{URL::to('/')}}/" class="primary-btn cart-btn">CONTINUE SHOPPING</a>
+					<a href="{{URL::to('/')}}/cart/proceed" class="primary-btn cart-btn cart-btn-right card-btn-ic"><span class="icon_loading"></span>
 					Proceed Checkout</a>
 				</div>
 			</div>

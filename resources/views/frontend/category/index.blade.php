@@ -18,14 +18,37 @@
             	@foreach($vegetables as $vegetable)
                 <div class="col-md-2">
                         <div class="card">
-                            <div class="card-body p-0 d-flex justify-content-center">
+                            <!-- <div class="card-body p-0 d-flex justify-content-center">
                                 <img src="{{url('/')}}/images/vegetable/{{$vegetable->getName->image}}" class="img-fluid p-2 stock-img">
+                            </div> -->
+                            <div class="card-body p-0 d-flex justify-content-center align-items-center" style="height:140px;">
+                                <img src="{{url('/')}}/images/vegetable/{{$vegetable->getName->image}}"
+                                class="img-fluid p-2 stock-img"
+                                style="max-height:130px; object-fit:contain;">
                             </div>
+
                             <div class="card-footer text-center p-0">
                                 <h6 class="bg-gray-dark color-palette py-1 m-0">{{$vegetable->getName->display_name}}</h6>
                                 <p class="m-0 py-1 text-danger font-weight-bold">Rs. {{$vegetable->getPurchaseMinLatestI->rate}} / {{$vegetable->getPurchaseMinLatestI->getUnit->name}}</p>
                             </div>
                         </div>
+                        <form role="form" class="myform">
+                            {{csrf_field()}}
+                            <div class="product__details__quantity">
+                                <div class="quantity">
+                                    <div class="pro-qty">
+                                        <input type="text" value="1" name="quantity">
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="hidden" name="purchase_manage_id" value="{{$vegetable->getPurchaseMin->get(0)->id}}">
+                            @if(Auth::check())
+
+                            <button type="submit" class="btn btn-info btn1" id="btn" >Add To Cart</button>
+                            @else
+                            <button type="submit" class="btn btn-info btn2" id="btn" onclick="this.disabled=true">Add To Cart</button>
+                            @endif
+                        </form>
                     </div>  
                <!--  <div class="col-lg-3 col-md-4 col-sm-6 mix oranges fresh-meat">
                     <div class="featured__item">
@@ -40,4 +63,54 @@
             </div>
         </div>
     </section>
+    @section('javascript')
+    <script type="text/javascript">
+        $('.btn2').on('click',function(){
+            Swal.fire({
+              title: 'You should login first',
+              timer: 1000
+          })
+        })
+    </script>
+
+    <script type="text/javascript">
+        $(".myform").on("submit", function(e){
+            e.preventDefault();
+            var formData = $(this).serialize();
+            debugger;
+            
+            $.ajax({
+                type : "POST",
+                url  : "{{URL::to('/')}}/cart/store",
+                dataType : "JSON",
+                data : formData,
+                success:function(data)
+                {
+                    location.reload();
+                    // console.log(data); 
+                    const Toast = Swal.mixin({
+                      toast: true,
+                      position: 'bottom-start',
+                      showConfirmButton: false,
+                      timer: 3000,
+                      timerProgressBar: true,
+                      onOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                })
+
+                    Toast.fire({
+                      icon: 'success',
+                      title: 'Added successfully'
+                  })
+                },
+                error: function (e) {
+                    alert('Sorry! this data is used some where');
+                    Pace.start();
+                }
+            });
+        });
+    </script>
+    @endsection
 @endsection
