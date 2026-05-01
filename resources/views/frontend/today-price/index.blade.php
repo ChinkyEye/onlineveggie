@@ -25,7 +25,7 @@
                             </div>
                             <div class="card-footer text-center p-0">
                                 <h6 class="bg-gray-dark color-palette py-1 m-0">{{$list->getName->display_name}}</h6>
-                                <p class="m-0 py-1 text-danger font-weight-bold">Rs. {{$list->getPurchaseMinLatestI->rate}} / {{$list->getPurchaseMinLatestI->getUnit->name}}</p>
+                                <p class="m-0 py-1 text-danger font-weight-bold">£. {{$list->getPurchaseMinLatestI->rate}} / {{$list->getPurchaseMinLatestI->getUnit->name}}</p>
                             </div>
                         </div>
                     </div> 
