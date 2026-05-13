@@ -11,8 +11,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UsersTableSeeder::class);
+        // Baseline fixed data (branch, address, admin user only).
         $this->call(UsersTableSeeder::class);
 
+        // Parametric benchmark dataset (catalog/users/inventory).
+        // Run on its own with:
+        //   BENCHMARK_SIZE=1000 php artisan db:seed --class=BenchmarkSeeder
+        // $this->call(BenchmarkSeeder::class);
     }
 }
